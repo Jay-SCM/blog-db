@@ -1,1 +1,21 @@
+const createComment = (data, res) => {
+    // creates a new comment using JSON data POSTed in request body
+    Models.Comment.create(data)
+        .then((data) => res.send({ result: 200, data: data }))
+        .catch((err) => {
+            console.log(err);
+            res.send({ result: 500, error: err.message });
+        });
+};
 
+// uses JSON from request body to update comment matching ID from params
+const updateComment = (req, res) => {
+    Models.Comment.update(req.body, { where: { id: req.params.id } })
+        .then((data) => {
+            res.send({ result: 200, data: data });
+        })
+        .catch((err) => {
+            console.log(err);
+            res.send({ result: 500, error: err.message });
+        });
+};
