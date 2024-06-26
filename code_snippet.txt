@@ -1,1 +1,17 @@
+const GITHUB_USERNAME = 'Jay-SCM';
+const CODE_SNIPPET_FILE_PATH = 'code_snippet.txt'; // Adjust this to your specific file path
 
+export const fetchProjects = async (): Promise<Project[]> => {
+  try {
+    const response = await axios.get(`https://api.github.com/users/${GITHUB_USERNAME}/repos`);
+    const repos = response.data;
+
+    const projects: Project[] = await Promise.all(repos.map(async (repo: any) => {
+      let codeSnippet = 'No code snippet available.';
+
+      try {
+        const snippetResponse = await axios.get(`https://raw.githubusercontent.com/${GITHUB_USERNAME}/${repo.name}/main/${CODE_SNIPPET_FILE_PATH}`);
+        codeSnippet = snippetResponse.data;
+      } catch (error) {
+        console.error(`Error fetching code snippet for ${repo.name}:`, error);
+      }
