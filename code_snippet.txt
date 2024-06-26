@@ -10,7 +10,8 @@ export const fetchProjects = async (): Promise<Project[]> => {
       let codeSnippet = 'No code snippet available.';
 
       try {
-        const snippetResponse = await axios.get(`https://raw.githubusercontent.com/${GITHUB_USERNAME}/${repo.name}/main/${CODE_SNIPPET_FILE_PATH}`);
+        const snippetResponse = await axios.get(`https://raw.githubusercontent.com
+        /${GITHUB_USERNAME}/${repo.name}/main/${CODE_SNIPPET_FILE_PATH}`);
         codeSnippet = snippetResponse.data;
       } catch (error) {
         console.error(`Error fetching code snippet for ${repo.name}:`, error);
